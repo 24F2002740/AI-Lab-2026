@@ -1,0 +1,97 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyOzGDygeHDG0TJeiJWzZxRi",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/24F2002740/AI-Lab-2026/blob/main/1WN24CS127_Week4_HillClimbing_N_Queens\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 4,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "a8ZwBF5BHOd8",
+        "outputId": "b7e947c0-1d2d-43f6-d978-a586f60582c5"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Enter initial state (4 rows, 1-4): 1 2 3 4\n",
+            "Solution: [2, 4, 1, 3]\n",
+            "Cost: 0\n",
+            "K ABHIRAMA PURANIKA,1WN24CS127\n",
+            ". . Q .\n",
+            "Q . . .\n",
+            ". . . Q\n",
+            ". Q . .\n"
+          ]
+        }
+      ],
+      "source": [
+        "import random\n",
+        "\n",
+        "def cost(board):\n",
+        "    c = 0\n",
+        "    for i in range(4):\n",
+        "        for j in range(i + 1, 4):\n",
+        "            if board[i] == board[j] or abs(board[i] - board[j]) == abs(i - j):\n",
+        "                c += 1\n",
+        "    return c\n",
+        "\n",
+        "def hill_climbing():\n",
+        "    board = list(map(int, input(\"Enter initial state (4 rows, 1-4): \").split()))\n",
+        "    board = [x - 1 for x in board]\n",
+        "\n",
+        "    while cost(board) != 0:\n",
+        "        best = board[:]\n",
+        "\n",
+        "        for col in range(4):\n",
+        "            for row in range(4):\n",
+        "                temp = board[:]\n",
+        "                temp[col] = row\n",
+        "\n",
+        "                if cost(temp) < cost(best):\n",
+        "                    best = temp\n",
+        "\n",
+        "        if best == board:\n",
+        "            board = [random.randint(0, 3) for _ in range(4)]\n",
+        "        else:\n",
+        "            board = best\n",
+        "\n",
+        "    print(\"Solution:\", [x + 1 for x in board])\n",
+        "    print(\"Cost:\", cost(board))\n",
+        "    print(\"K ABHIRAMA PURANIKA,1WN24CS127\")\n",
+        "\n",
+        "    for row in range(4):\n",
+        "        print(\" \".join(\"Q\" if board[col] == row else \".\" for col in range(4)))\n",
+        "\n",
+        "hill_climbing()\n"
+      ]
+    }
+  ]
+}
